@@ -12,8 +12,7 @@ export default function Home() {
     e.preventDefault();
     setGeneratedCompany("");
     setLoading(true);
-
-    const response = await fetch("/api/openai-api", {
+    const response = await fetch("/api/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,8 +26,22 @@ export default function Home() {
       throw new Error(response.statusText);
     }
 
-    let answer = await response.json();
-    setGeneratedCompany(answer);
+    // This data is a ReadableStream
+    const data = response.body;
+    if (!data) {
+      return;
+    }
+
+    const reader = data.getReader();
+    const decoder = new TextDecoder();
+    let done = false;
+
+    while (!done) {
+      const { value, done: doneReading } = await reader.read();
+      done = doneReading;
+      const chunkValue = decoder.decode(value);
+      setGeneratedCompany((prev) => prev + chunkValue);
+    }
     setLoading(false);
   };
 
