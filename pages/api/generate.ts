@@ -1,14 +1,14 @@
 import { OpenAIStream, OpenAIStreamPayload } from "../../utils/OpenAIStream";
 
 export const config = {
-  runtime: 'edge',
+    runtime: "edge",
 };
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("Missing env var from OpenAI");
 }
 
-export async function GET(req: Request): Promise<Response> {
+export default async function handler(req: Request): Promise<Response> {
   const { prompt } = (await req.json()) as {
     prompt?: string;
   };
