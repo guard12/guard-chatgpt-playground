@@ -8,7 +8,7 @@ if (!process.env.OPENAI_API_KEY) {
   throw new Error("Missing env var from OpenAI");
 }
 
-export async function handler(req: Request): Promise<Response> {
+export default async function handler(req: Request): Promise<Response> {
   const { prompt } = (await req.json()) as {
     prompt?: string;
   };
