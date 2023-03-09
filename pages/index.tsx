@@ -64,7 +64,7 @@ export default function Home() {
         Generate your company!
       </button>
       {generatedCompany && <div
-          className="bg-gray-300 rounded-xl shadow-md p-4"
+          className="bg-gray-800 rounded-xl shadow-md p-4 mt-8"
         >
           <p>{generatedCompany}</p>
         </div>
